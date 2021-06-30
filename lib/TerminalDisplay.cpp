@@ -3424,6 +3424,7 @@ void TerminalDisplay::update(const QRegion &region)
 //            QQuickPaintedItem::update(rect.adjusted(-1, -1, +1, +1));
 //        }
     QQuickPaintedItem::update(region.boundingRect().adjusted(-1, -1, +1, +1));
+
     emit imagePainted();
 }
 
@@ -3457,8 +3458,8 @@ void TerminalDisplay::setSession(KSession * session)
                     m_session, SIGNAL(termGetFocus()));
             connect(this, SIGNAL(termLostFocus()),
                     m_session, SIGNAL(termLostFocus()));
-        connect(this, SIGNAL(keyPressedSignal(QKeyEvent *)),
-                m_session, SIGNAL(termKeyPressed(QKeyEvent *)));
+        connect(this, SIGNAL(keyPressedSignal(QKeyEvent *, bool)),
+                m_session, SIGNAL(termKeyPressed(QKeyEvent *, bool)));
 
         m_session->addView(this);
 

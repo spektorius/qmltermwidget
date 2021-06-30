@@ -119,7 +119,7 @@ signals:
     void termGetFocus();
     void termLostFocus();
 
-    void termKeyPressed(QKeyEvent *);
+    void termKeyPressed(QKeyEvent *, bool);
 
     void changedKeyBindings(QString kb);
 
