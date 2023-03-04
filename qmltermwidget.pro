@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = qmltermwidget
-QT += qml quick widgets
+QT += qml quick widgets core5compat
 CONFIG += qt plugin
 
 include(lib.pri)

@@ -26,7 +26,7 @@
 #include <QObject>
 #include <QStringList>
 #include <QHash>
-#include <QRegExp>
+#include <QtCore5Compat/QRegExp>
 
 namespace Konsole
 {
