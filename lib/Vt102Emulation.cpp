@@ -47,7 +47,8 @@
 // Qt
 #include <QEvent>
 #include <QKeyEvent>
-#include <QByteRef>
+#include <QByteArrayView>
+#include <QtCore5Compat/QTextCodec>
 #include <QDebug>
 
 // KDE
@@ -975,8 +976,8 @@ void Vt102Emulation::sendMouseEvent( int cb, int cx, int cy , int eventType )
             // coordinate+32, no matter what the locale is. We could easily
             // convert manually, but QString can also do it for us.
             QChar coords[2];
-            coords[0] = cx + 0x20;
-            coords[1] = cy + 0x20;
+            coords[0] = QChar(cx + 0x20);
+            coords[1] = QChar(cy + 0x20);
             QString coordsStr = QString(coords, 2);
             QByteArray utf8 = coordsStr.toUtf8();
             snprintf(command, sizeof(command), "\033[M%c%s", cb + 0x20, utf8.constData());
@@ -1128,7 +1129,7 @@ void Vt102Emulation::sendKeyEvent(QKeyEvent* origEvent, bool fromPaste)
         }
         else if ( !entry.text().isEmpty() )
         {
-            textToSend += entry.text(true,modifiers);
+            textToSend += _codec->fromUnicode(QString::fromUtf8(entry.text(true,modifiers)));
         }
         else if((modifiers & KeyboardTranslator::CTRL_MOD) && event->key() >= 0x40 && event->key() < 0x5f) {
             textToSend += (event->key() & 0x1f);

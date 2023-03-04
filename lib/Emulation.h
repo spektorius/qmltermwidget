@@ -29,7 +29,7 @@
 // Qt
 #include <QKeyEvent>
 //#include <QPointer>
-#include <QTextCodec>
+#include <QtCore5Compat/QTextCodec>
 #include <QTextStream>
 #include <QTimer>
 

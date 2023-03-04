@@ -145,7 +145,7 @@ public:
         /** Show the scroll bar on the right side of the display. */
         ScrollBarRight=2 
     };
-    /** 
+    /**/
 
     /** Sets the background image of the terminal display. */
     void setBackgroundImage(const QString& backgroundImage);
@@ -466,7 +466,7 @@ public:
     // maps a point on the widget to the position ( ie. line and column )
     // of the character at that point.
 
-    void getCharacterPosition(const QPoint& widgetPoint,int& line,int& column) const;
+    void getCharacterPosition(const QPointF& widgetPoint,int& line,int& column) const;
 
     void disableBracketedPasteMode(bool disable) { _disabledBracketedPasteMode = disable; }
     bool bracketedPasteModeIsDisabled() const { return _disabledBracketedPasteMode; }
@@ -564,6 +564,7 @@ public slots:
      */
     void setForegroundColor(const QColor& color);
 
+    void setColorTableColor(const int colorId, const QColor &color);
     void selectionChanged();
 
     // QMLTermWidget
@@ -690,10 +691,10 @@ protected:
     QVariant inputMethodQuery( Qt::InputMethodQuery query ) const override;
 
     // QMLTermWidget
-    void paint(QPainter * painter);
-    virtual void geometryChanged(const QRectF & newGeometry, const QRectF & oldGeometry);
+    void paint(QPainter * painter) override;
+    virtual void geometryChange(const QRectF & newGeometry, const QRectF & oldGeometry) override;
     void inputMethodQuery(QInputMethodQueryEvent *event);
-    void itemChange(ItemChange change, const ItemChangeData & value);
+    void itemChange(ItemChange change, const ItemChangeData & value) override;
 
 protected slots:
 
