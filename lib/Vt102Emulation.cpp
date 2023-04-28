@@ -1143,8 +1143,17 @@ void Vt102Emulation::sendKeyEvent(QKeyEvent* origEvent, bool fromPaste)
         else if (event->key() == Qt::Key_PageDown) {
             textToSend += "\033[6~";
         }
-        else {
+        else if (event->text().length() > 0) {
             textToSend += _codec->fromUnicode(event->text());
+        }
+        else if (event->key() <= 0xFFFF) {
+            QChar c(event->key());
+
+            if (c.isLetter()) {
+                c = ((modifiers & Qt::ShiftModifier) != 0) ? c.toUpper() : c.toLower();
+            }
+
+            textToSend += _codec->fromUnicode(QString(c));
         }
 
         if (!fromPaste && textToSend.length()) {
